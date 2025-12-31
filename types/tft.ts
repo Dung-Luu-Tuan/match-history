@@ -81,3 +81,19 @@ export interface SummonerInfo {
   summonerLevel: number;
 }
 
+// TFT League Entry (ranked information)
+export interface TFTLeagueEntry {
+  puuid: string;
+  leagueId: string;
+  queueType: string; // e.g., "RANKED_TFT", "RANKED_TFT_TURBO"
+  tier: string; // e.g., "IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "MASTER", "GRANDMASTER", "CHALLENGER"
+  rank: string; // e.g., "I", "II", "III", "IV" (only for tiers below MASTER)
+  leaguePoints: number; // Current LP
+  wins: number;
+  losses: number;
+  veteran: boolean;
+  inactive: boolean;
+  freshBlood: boolean;
+  hotStreak: boolean;
+}
+

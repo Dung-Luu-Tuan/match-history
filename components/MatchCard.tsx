@@ -40,19 +40,6 @@ export default function MatchCard({ match, summonerName, puuid }: MatchCardProps
     return '#F44336'; // Red
   };
 
-  const getPlacementLP = (placement: number) => {
-    // Calculate approximate LP gain/loss based on placement
-    if (placement === 1) return '+40';
-    if (placement === 2) return '+20';
-    if (placement === 3) return '+10';
-    if (placement === 4) return '0';
-    if (placement === 5) return '-10';
-    if (placement === 6) return '-20';
-    if (placement === 7) return '-30';
-    return '-40';
-  };
-
-
   // Calculate health percentage (approximate based on placement)
   const getHealthPercentage = (placement: number) => {
     // Top 4 = high health, bottom 4 = low health
@@ -91,21 +78,7 @@ export default function MatchCard({ match, summonerName, puuid }: MatchCardProps
               className="text-sm font-bold"
               style={{ color: getPlacementColor(participant.placement) }}
             >
-              Ranked {getPlacementLP(participant.placement)}LP
-            </span>
-          </div>
-
-          {/* Gold */}
-          <div className="flex items-center gap-1.5">
-            <span className="text-base">💰</span>
-            <span className="text-sm font-bold">{participant.gold_left}</span>
-          </div>
-
-          {/* Health Percentage */}
-          <div className="flex items-center gap-1.5">
-            <span className="text-base">⚔️</span>
-            <span className="text-sm font-bold">
-              {getHealthPercentage(participant.placement)}
+              Ranked
             </span>
           </div>
 
@@ -122,14 +95,14 @@ export default function MatchCard({ match, summonerName, puuid }: MatchCardProps
           {activeTraits.map((trait) => (
             <div
               key={trait.name}
-              className="flex items-center gap-1.5 bg-[rgba(255,215,0,0.2)] px-2.5 py-1.5 rounded-[5px] border border-[rgba(255,215,0,0.4)]"
+              className="flex items-center gap-1.5 bg-[rgba(255,215,0,0.2)] px-1 py-0.5 rounded-[5px] border border-[rgba(255,215,0,0.4)]"
               title={`${trait.name}: ${trait.num_units} champions`}
             >
               <Image
                 src={getTraitImageUrlSync(trait.name, trait.tier_current)}
                 alt={trait.name}
-                width={24}
-                height={24}
+                width={10}
+                height={10}
                 className="object-contain"
                 unoptimized
                 onError={(e) => {
@@ -148,7 +121,7 @@ export default function MatchCard({ match, summonerName, puuid }: MatchCardProps
                   }
                 }}
               />
-              <span className="text-[0.85rem] font-bold text-[#FFD700]">
+              <span className="text-[0.6rem] font-bold text-[#FFD700]">
                 {trait.num_units}
               </span>
             </div>

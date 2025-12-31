@@ -154,3 +154,11 @@ export async function getTFTMatches(matchIds: string[], delayMs: number = 100) {
   return matches;
 }
 
+// Get TFT League entries by PUUID (platform-specific)
+// Returns ranked information including current LP
+// platform: vn2, th2, sg2, ph2, tw2, etc.
+export async function getTFTLeagueByPuuid(puuid: string, platform: string = 'vn2') {
+  const url = `https://${platform}.api.riotgames.com/tft/league/v1/by-puuid/${puuid}`;
+  return fetchRiotAPI(url);
+}
+

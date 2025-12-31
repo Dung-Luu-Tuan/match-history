@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAccountByRiotId, getTFTSummonerByPuuid, getTFTMatchList, getTFTMatches } from '@/lib/riot-api';
+import { getAccountByRiotId, getTFTSummonerByPuuid, getTFTMatchList, getTFTMatches, getTFTLeagueByPuuid } from '@/lib/riot-api';
+import { TFTLeagueEntry } from '@/types/tft';
 
 // Combined endpoint: Get full player data (account + summoner + matches)
 // Format: /api/player/Lians#1211?platform=vn2
@@ -42,11 +43,27 @@ export async function GET(
     // Add delay between match requests (100ms default)
     const matches = await getTFTMatches(matchIds, 150);
 
+    // Step 5: Get League entries to get ranked info
+    let leagueEntries: TFTLeagueEntry[] = [];
+    try {
+      const entries = await getTFTLeagueByPuuid(account.puuid, platform);
+      leagueEntries = Array.isArray(entries) ? entries as TFTLeagueEntry[] : [];
+    } catch (error: any) {
+      console.warn('Failed to fetch league entries:', error);
+      // Continue without league data if it fails
+    }
+
+    // Find RANKED_TFT entry
+    const rankedEntry = leagueEntries.find(
+      (entry) => entry.queueType === 'RANKED_TFT'
+    ) || null;
+
     return NextResponse.json({
       account,
       summoner,
       matches,
       matchIds,
+      leagueEntry: rankedEntry,
     });
   } catch (error: any) {
     console.error('Error fetching player data:', error);

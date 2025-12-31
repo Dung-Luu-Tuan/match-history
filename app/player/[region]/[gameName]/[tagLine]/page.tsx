@@ -45,6 +45,7 @@ export default function PlayerPage() {
           tagLine: data.account.tagLine,
           puuid: data.account.puuid,
           matches: data.matches,
+          leagueEntry: data.leagueEntry || null,
         });
       } catch (err: any) {
         setError(err.message || 'An error occurred');
@@ -84,7 +85,7 @@ export default function PlayerPage() {
         </div>
       )}
 
-      <main className="p-8 max-w-[1400px] mx-auto">
+      <main className="p-8 max-w-[850px] mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-5xl mb-4 font-bold">
             TFT Match History
